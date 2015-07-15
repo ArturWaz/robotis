@@ -7,17 +7,39 @@
 
 
 #include <cstdint>
+#include <string>
 
 
 
 class _base_Dynamixel_v1 {
 public:
 
+    enum class Error { // bit number
+        INPUT_VOLTAGE_ERROR = 0,
+        ANGLE_LIMIT_ERROR = 1,
+        OVERHEATING_ERROR = 2,
+        RANGE_ERROR = 3,
+        CHECKSUM_ERROR = 4,
+        OVERLOAD_ERROR = 5,
+        INSTRUCTION_ERROR = 6
+    };
+
+
     _base_Dynamixel_v1();
 
     uint32_t splitPackets(std::uint8_t const *inputBuffer, std::uint32_t inputLength, std::uint8_t **outputPackets, std::uint32_t maxNumberOfPackets, std::uint32_t maxNumberOfBytes);
 
-    static std::uint8_t checksum(std::uint8_t const *packet);
+    void resetSpliting(); // could be useful in timeouts
+
+    static void pingEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
+    static std::uint8_t statusResponse(std::uint8_t const *packet, std::uint8_t &ID);
+
+    static std::uint8_t calculateChecksum(std::uint8_t const *packet);
+    static bool validateChecksum(std::uint8_t const *packet, std::uint32_t maxPacketLength);
+
+    static bool validatePacket(std::uint8_t const *packet, std::uint32_t maxPacketLength);
+
+    static std::string errorsToString(std::uint8_t error);
 
 private:
 
@@ -33,3 +55,4 @@ private:
 
 
 #endif //DYNAMIXEL__BASE_DYNAMIXEL_V1_H
+

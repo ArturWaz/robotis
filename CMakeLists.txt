@@ -19,9 +19,8 @@ endif ( UNIX )
 
 
 
-add_subdirectory(ft232r)
 add_subdirectory(robotis)
 
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries (${PROJECT_NAME} ft232r robotis)
+target_link_libraries (${PROJECT_NAME} robotis)

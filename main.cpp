@@ -1,6 +1,5 @@
 
 
-#include "ft232r/FT232R.h"
 #include "robotis/_base_Dynamixel_v1.h"
 
 
@@ -8,16 +7,12 @@
 #include <iostream>
 #include <cstring>
 #include <stdexcept>
-
-
+#include <robotis/MX28.h>
 
 
 using namespace std;
 
 void show(std::uint8_t l) { cout << hex << "0x" << int(l) << " " << dec << endl; }
-
-
-
 
 
 
@@ -44,11 +39,33 @@ void printLine(std::uint8_t const *b, std::uint32_t length) {
 }
 
 
-void test() {
+void printPacket(std::uint8_t const *b) {
+    cout << "Line:   [ " << hex;
+    for (uint32_t i = 0; i < b[3]+uint32_t(4); ++i) {
+        cout << "0x" << int(b[i]) << " ";
+    }
+    cout << dec << "].\n";
+}
+
+
+void test_base_Dynamixel_v1() {
 
     std::uint8_t buf1[12] = {0x02, 0xFF, 0XFF, 0x01, 0x05, 0x03, 0x0C, 0x64, 0xAA, 0xDC, 0x54, 0x23};
     std::uint8_t buf2[12] = {0x53, 0x64, 0xFF, 0xFF, 0x01, 0x04, 0x02, 0x2B, 0x01, 0xCC, 0x43, 0x66};
     std::uint8_t buf3[24] = {0x53, 0x64, 0xFF, 0xFF, 0x01, 0x04, 0x02, 0x2B, 0x01, 0xCC, 0x43, 0x66, 0x02, 0xFF, 0XFF, 0x01, 0x05, 0x03, 0x0C, 0x64, 0xAA, 0xDC, 0x54, 0x23};
+    std::uint8_t buf4[6] = {0x02, 0xFF, 0XFF, 0x01, 0x05, 0x03};
+    std::uint8_t buf5[6] = {0x0C, 0x64, 0xAA, 0xDC, 0x54, 0x23};
+
+    std::uint8_t buf6[1] = {0xFF};
+    std::uint8_t buf7[1] = {0xFF};
+    std::uint8_t buf8[1] = {0x01};
+    std::uint8_t buf9[1] = {0x05};
+    std::uint8_t buf10[1] = {0x03};
+    std::uint8_t buf11[1] = {0x0C};
+    std::uint8_t buf12[1] = {0x64};
+    std::uint8_t buf13[1] = {0xAA};
+    std::uint8_t buf14[1] = {0xDC};
+
     _base_Dynamixel_v1 d;
 
     std::uint8_t **packets = new uint8_t*[20];
@@ -85,14 +102,115 @@ void test() {
         printLine(packets[i],packets[i][3]+4);
     }
 
-    cout << hex << int(_base_Dynamixel_v1::checksum(packets[0])) << dec << endl;
-    cout << hex << int(_base_Dynamixel_v1::checksum(packets[1])) << dec << endl;
+
+    cout << "Checksum: " << hex << int(_base_Dynamixel_v1::calculateChecksum(packets[0])) << ", validate checksum: " << _base_Dynamixel_v1::validateChecksum(packets[0],250) << ", validate packet: " << _base_Dynamixel_v1::validatePacket(packets[0],250) << dec << endl;
+    cout << "Checksum: " << hex << int(_base_Dynamixel_v1::calculateChecksum(packets[1])) << ", validate checksum: " << _base_Dynamixel_v1::validateChecksum(packets[1],250) << ", validate packet: " << _base_Dynamixel_v1::validatePacket(packets[1],250) << dec << endl;
+
+    numOfPack = d.splitPackets(buf4,6,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf5,6,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf6,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf7,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf8,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf9,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf10,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf11,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf12,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf13,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+
+    numOfPack = d.splitPackets(buf14,1,packets,20,250);
+    cout << "Number of read packets: " << numOfPack << endl;
+    for (std::uint32_t i = 0; i < numOfPack; ++i) {
+        printLine(packets[i],packets[i][3]+4);
+    }
+
+}
+
+
+void test_MX28() {
+
+    uint8_t packet[100] = {};
+
+    MX28::getPresentPositionEnquire(packet, 100, 1);
+
+    printPacket(packet);
+
+    cout << "Packet validation: " << (MX28::validatePacket(packet,250)?"good":"bad") << endl;
+    cout << "Checksum validation: " << (MX28::validateChecksum(packet,250)?"good":"bad") << endl;
+
+    uint8_t ID;
+    uint16_t value;
+
+    cout << hex << int(MX28::getPresentPositionResponse(packet, ID, value)) << endl;
+    cout << int(ID) << "   " << value << dec << endl;
+
+    cout << MX28::errorsToString(0xFF);
 
 }
 
 int main() {
 
-    test();
+    //test_base_Dynamixel_v1();
+    test_MX28();
+
 
     return 0;
 }
