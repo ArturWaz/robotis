@@ -34,6 +34,12 @@ public:
     static void getPunchEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
     static std::uint8_t getPunchResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value);
 
+    static void getGoalPositionEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
+    static std::uint8_t getGoalPositionResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value);
+
+    static void getMovingSpeedEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
+    static std::uint8_t getMovingSpeedResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value);
+
 
     static void getPresentVoltageEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
     static std::uint8_t getPresentVoltageResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint8_t &value);

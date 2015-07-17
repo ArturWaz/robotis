@@ -8,6 +8,9 @@
 
 
 
+
+
+
 /*
  *  READING FROM SERVO
  */
@@ -38,6 +41,9 @@
 
 
 
+
+
+
 void MX28::getPIDEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID) {
     GENERATE_SENDING_PACKET_FOR_READ(0x1A,0x03) }
 std::uint8_t MX28::getPIDResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint8_t &P, std::uint8_t &I, std::uint8_t &D) {
@@ -47,6 +53,8 @@ std::uint8_t MX28::getPIDResponse(std::uint8_t const *packet, std::uint8_t &ID, 
     P = packet[7];
     return packet[4];
 }
+
+
 
 
 
@@ -72,6 +80,20 @@ void MX28::getPunchEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, 
     GENERATE_SENDING_PACKET_FOR_READ(0x30,0x02) }
 std::uint8_t MX28::getPunchResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value) {
     GENERATE_PACKET_READER_2B() }
+
+
+void MX28::getGoalPositionEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID) {
+    GENERATE_SENDING_PACKET_FOR_READ(0x1E,0x02) }
+std::uint8_t MX28::getGoalPositionResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value) {
+    GENERATE_PACKET_READER_2B() }
+
+
+void MX28::getMovingSpeedEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID) {
+    GENERATE_SENDING_PACKET_FOR_READ(0x20,0x02) }
+std::uint8_t MX28::getMovingSpeedResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint16_t &value) {
+    GENERATE_PACKET_READER_2B() }
+
+
 
 
 
@@ -103,6 +125,7 @@ void MX28::getTorqueEnableEnquire(std::uint8_t *packet, std::uint32_t maxPacketL
     GENERATE_SENDING_PACKET_FOR_READ(0x18,0x01) }
 std::uint8_t MX28::getTorqueEnableResponse(std::uint8_t const *packet, std::uint8_t &ID, std::uint8_t &value) {
     GENERATE_PACKET_READER_1B() }
+
 
 
 
