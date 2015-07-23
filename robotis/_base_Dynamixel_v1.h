@@ -6,7 +6,7 @@
 #define _BASE_DYNAMIXEL_V1_H
 
 
-#include <cstdint>
+#include <stdint.h>
 #include <string>
 
 
@@ -27,29 +27,29 @@ public:
 
     _base_Dynamixel_v1();
 
-    uint32_t splitPackets(std::uint8_t const *inputBuffer, std::uint32_t inputLength, std::uint8_t **outputPackets, std::uint32_t maxNumberOfPackets, std::uint32_t maxNumberOfBytes);
+    uint32_t splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, uint8_t **outputPackets, uint32_t maxNumberOfPackets, uint32_t maxNumberOfBytes);
 
     void resetSpliting(); // could be useful in timeouts
 
-    static void pingEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID);
-    static std::uint8_t statusResponse(std::uint8_t const *packet, std::uint8_t &ID);
+    static void pingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
+    static uint8_t statusResponse(uint8_t const *packet, uint8_t &ID);
 
-    static std::uint8_t calculateChecksum(std::uint8_t const *packet);
-    static bool validateChecksum(std::uint8_t const *packet, std::uint32_t maxPacketLength);
+    static uint8_t calculateChecksum(uint8_t const *packet);
+    static bool validateChecksum(uint8_t const *packet, uint32_t maxPacketLength);
 
-    static bool validatePacket(std::uint8_t const *packet, std::uint32_t maxPacketLength);
+    static bool validatePacket(uint8_t const *packet, uint32_t maxPacketLength);
 
-    static std::string errorsToString(std::uint8_t error);
+    static std::string errorsToString(uint8_t error);
 
 private:
 
-    std::uint8_t packet_[254] = {};
-    std::uint8_t *const packetBegin_;
-    std::uint8_t *const packetEnd_;
+    uint8_t packet_[254] = {};
+    uint8_t *const packetBegin_;
+    uint8_t *const packetEnd_;
 
-    std::uint8_t *ptrPacketCur_;
-    std::uint8_t *ptrPacketBegin_;
-    std::uint8_t *ptrPacketEnd_;
+    uint8_t *ptrPacketCur_;
+    uint8_t *ptrPacketBegin_;
+    uint8_t *ptrPacketEnd_;
 
 };
 

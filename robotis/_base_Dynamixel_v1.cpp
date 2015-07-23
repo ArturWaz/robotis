@@ -19,18 +19,18 @@ _base_Dynamixel_v1::_base_Dynamixel_v1():
         ptrPacketEnd_(nullptr) {}
 
 
-uint32_t _base_Dynamixel_v1::splitPackets(std::uint8_t const *inputBuffer, std::uint32_t inputLength, std::uint8_t **outputPackets, std::uint32_t maxNumberOfPackets, std::uint32_t maxNumberOfBytes) {
+uint32_t _base_Dynamixel_v1::splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, uint8_t **outputPackets, uint32_t maxNumberOfPackets, uint32_t maxNumberOfBytes) {
     if (maxNumberOfPackets < 1 || maxNumberOfBytes < 5) return 0;
-    std::uint32_t numberOfPackets = 0;
+    uint32_t numberOfPackets = 0;
 
-    for (std::uint8_t const *ptrBuff = &(inputBuffer[0]); ptrBuff != &(inputBuffer[inputLength]); ++ptrBuff) {
+    for (uint8_t const *ptrBuff = &(inputBuffer[0]); ptrBuff != &(inputBuffer[inputLength]); ++ptrBuff) {
         *ptrPacketCur_ = *ptrBuff;
 
         if (ptrPacketEnd_ == nullptr) {
-            std::uint8_t *ptrTmp = ptrPacketCur_-1;
+            uint8_t *ptrTmp = ptrPacketCur_-1;
             if (*(--ptrTmp) == 0xFF) {
                 if (*(--ptrTmp) == 0xFF) {
-                    if (maxNumberOfBytes < (*ptrPacketCur_) + std::uint32_t(5))
+                    if (maxNumberOfBytes < (*ptrPacketCur_) + uint32_t(5))
                         throw std::range_error(" [ _base_Dynamixel_v1::splitPackets(...) ]: Maximum number of bytes is too small.\n");
                     ptrPacketEnd_ = ptrPacketCur_ + (*ptrPacketCur_);
                     ptrPacketBegin_ = ptrTmp;
@@ -39,12 +39,12 @@ uint32_t _base_Dynamixel_v1::splitPackets(std::uint8_t const *inputBuffer, std::
         }
 
         if (ptrPacketEnd_ == ptrPacketCur_) {
-            std::uint8_t checksum = 0;
-            for (std::uint8_t *ptr = ptrPacketBegin_+2; ptr != ptrPacketEnd_; ++ptr)
+            uint8_t checksum = 0;
+            for (uint8_t *ptr = ptrPacketBegin_+2; ptr != ptrPacketEnd_; ++ptr)
                 checksum += *ptr;
             checksum = ~checksum;
             if (checksum == *ptrPacketEnd_) {
-                std::memcpy(outputPackets[numberOfPackets],ptrPacketBegin_,sizeof(std::uint8_t)*(4+(*(ptrPacketBegin_+3))));
+                std::memcpy(outputPackets[numberOfPackets],ptrPacketBegin_,sizeof(uint8_t)*(4+(*(ptrPacketBegin_+3))));
                 ++numberOfPackets;
                 if (maxNumberOfPackets <= numberOfPackets) return numberOfPackets;
             }
@@ -70,48 +70,48 @@ void _base_Dynamixel_v1::resetSpliting() {
 }
 
 
-void _base_Dynamixel_v1::pingEnquire(std::uint8_t *packet, std::uint32_t maxPacketLength, std::uint8_t ID) {
-    if (maxPacketLength < 6) throw std::range_error(" [ MX_28::sendPresentPosition(std::uint8_t *, std::uint32_t, std::uint8_t ID) ]: Packet length is too short.\n");
+void _base_Dynamixel_v1::pingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+    if (maxPacketLength < 6) throw std::range_error(" [ MX_28::sendPresentPosition(uint8_t *, uint32_t, uint8_t ID) ]: Packet length is too short.\n");
     packet[0] = 0xFF;
     packet[1] = 0xFF;
     packet[2] = ID;
     packet[3] = 0x02;
     packet[4] = 0x01;
-    packet[5] = ~(ID+std::uint8_t(0x03));
+    packet[5] = ~(ID+uint8_t(0x03));
 }
 
 
-std::uint8_t _base_Dynamixel_v1::statusResponse(std::uint8_t const *packet, std::uint8_t &ID) {
+uint8_t _base_Dynamixel_v1::statusResponse(uint8_t const *packet, uint8_t &ID) {
     ID = packet[2];
     return packet[4];
 }
 
 
-std::uint8_t _base_Dynamixel_v1::calculateChecksum(std::uint8_t const *packet) {
-    std::uint8_t checksum = 0;
-    for (std::uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
+uint8_t _base_Dynamixel_v1::calculateChecksum(uint8_t const *packet) {
+    uint8_t checksum = 0;
+    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
     return ~checksum;
 }
 
 
-bool _base_Dynamixel_v1::validateChecksum(std::uint8_t const *packet, std::uint32_t maxPacketLength) {
+bool _base_Dynamixel_v1::validateChecksum(uint8_t const *packet, uint32_t maxPacketLength) {
     if (maxPacketLength < *(packet+3)) return false;
-    std::uint8_t checksum = 0;
-    for (std::uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
-    return *(packet+3+(*(packet+3))) == std::uint8_t(~checksum);
+    uint8_t checksum = 0;
+    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
+    return *(packet+3+(*(packet+3))) == uint8_t(~checksum);
 }
 
 
-bool _base_Dynamixel_v1::validatePacket(std::uint8_t const *packet, std::uint32_t maxPacketLength) {
+bool _base_Dynamixel_v1::validatePacket(uint8_t const *packet, uint32_t maxPacketLength) {
     if (maxPacketLength < *(packet+3)) return false;
     if (*packet != 0xFF && *(packet+1) != 0xFF) return false;
-    std::uint8_t checksum = 0;
-    for (std::uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
-    return *(packet+3+(*(packet+3))) == std::uint8_t(~checksum);
+    uint8_t checksum = 0;
+    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
+    return *(packet+3+(*(packet+3))) == uint8_t(~checksum);
 }
 
 
-std::string _base_Dynamixel_v1::errorsToString(std::uint8_t error) {
+std::string _base_Dynamixel_v1::errorsToString(uint8_t error) {
     std::string errorS("Error status: ");
     if (!error) return errorS + std::string("No errors.\n");
     if (error & (1<<int(Error::ANGLE_LIMIT_ERROR))) errorS += std::string("\n    * Goal Position is written out of the range from CW Angle Limit to CCW Angle Limit.\n");
