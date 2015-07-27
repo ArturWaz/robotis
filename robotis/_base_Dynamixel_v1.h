@@ -28,7 +28,6 @@ public:
     _base_Dynamixel_v1();
 
     uint32_t splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, uint8_t **outputPackets, uint32_t maxNumberOfPackets, uint32_t maxNumberOfBytes);
-
     void resetSpliting(); // could be useful in timeouts
 
     static void pingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
