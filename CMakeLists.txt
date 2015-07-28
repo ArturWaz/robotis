@@ -6,10 +6,6 @@ project(${PROJECT_NAME})
 
 
 
-
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_SHARED_LINKER_FLAGS "-static")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
