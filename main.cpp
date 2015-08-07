@@ -1,24 +1,20 @@
 
 
-#include "robotis/_base_Dynamixel_v1.h"
+#include "robotis/asynchronousPacketReader.h"
+#include "robotis/MX12W.h"
 
 
 #include <cstdint>
+#include <stdint.h>
 #include <iostream>
 #include <cstring>
 #include <stdexcept>
-#include <robotis/MX28.h>
 
 
 using namespace std;
 
 void show(std::uint8_t l) { cout << hex << "0x" << int(l) << " " << dec << endl; }
 
-
-
-
-
-using namespace std;
 
 template <class T>
 void printLine(T const *b, std::uint32_t length) {
@@ -48,6 +44,7 @@ void printPacket(std::uint8_t const *b) {
 }
 
 
+
 void test_base_Dynamixel_v1() {
 
     std::uint8_t buf1[12] = {0x02, 0xFF, 0XFF, 0x01, 0x05, 0x03, 0x0C, 0x64, 0xAA, 0xDC, 0x54, 0x23};
@@ -66,7 +63,7 @@ void test_base_Dynamixel_v1() {
     std::uint8_t buf13[1] = {0xAA};
     std::uint8_t buf14[1] = {0xDC};
 
-    _base_Dynamixel_v1 d;
+    asynchronousPacketReader d;
 
     std::uint8_t **packets = new uint8_t*[20];
     for (int i = 0; i < 250; ++i)
@@ -103,8 +100,8 @@ void test_base_Dynamixel_v1() {
     }
 
 
-    cout << "Checksum: " << hex << int(_base_Dynamixel_v1::calculateChecksum(packets[0])) << ", validate checksum: " << _base_Dynamixel_v1::validateChecksum(packets[0],250) << ", validate packet: " << _base_Dynamixel_v1::validatePacket(packets[0],250) << dec << endl;
-    cout << "Checksum: " << hex << int(_base_Dynamixel_v1::calculateChecksum(packets[1])) << ", validate checksum: " << _base_Dynamixel_v1::validateChecksum(packets[1],250) << ", validate packet: " << _base_Dynamixel_v1::validatePacket(packets[1],250) << dec << endl;
+    cout << "Checksum: " << hex << int(MX28::calculateChecksum(packets[0])) << ", validate checksum: " << MX28::validateChecksum(packets[0],250) << ", validate packet: " << MX28::validatePacket(packets[0],250) << dec << endl;
+    cout << "Checksum: " << hex << int(MX28::calculateChecksum(packets[1])) << ", validate checksum: " << MX28::validateChecksum(packets[1],250) << ", validate packet: " << MX28::validatePacket(packets[1],250) << dec << endl;
 
     numOfPack = d.splitPackets(buf4,6,packets,20,250);
     cout << "Number of read packets: " << numOfPack << endl;
@@ -185,6 +182,9 @@ void test_base_Dynamixel_v1() {
 }
 
 
+
+
+
 void test_MX28() {
 
     uint8_t packet[100] = {};
@@ -206,10 +206,16 @@ void test_MX28() {
 
 }
 
+
+
 int main() {
 
     //test_base_Dynamixel_v1();
     test_MX28();
+
+
+
+
 
 
     return 0;

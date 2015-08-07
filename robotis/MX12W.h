@@ -7,13 +7,14 @@
 #define DYNAMIXEL_MX12W_H
 
 
+
 #include "MX28.h"
 
 
 
-class MX12W: public MX28 {
-
-};
+namespace MX12W {
+    using namespace MX28;
+}
 
 
 
