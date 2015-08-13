@@ -30,10 +30,10 @@ uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint
             uint8_t *ptrTmp = ptrPacketCur_-1;
             if (*(--ptrTmp) == 0xFF) {
                 if (*(--ptrTmp) == 0xFF) {
-                    if (maxNumberOfBytes < (*ptrPacketCur_) + uint32_t(5))
+                    if (maxNumberOfBytes < (*ptrPacketCur_) + 5u)
                         throw std::range_error(" [ asynchronousPacketReader::splitPackets(...) ]: Maximum number of bytes is too small.\n");
-                    ptrPacketEnd_ = ptrPacketCur_ + (*ptrPacketCur_);
                     ptrPacketBegin_ = ptrTmp;
+                    ptrPacketEnd_ = ptrPacketCur_ + (*ptrPacketCur_);
                 }
             }
         }
@@ -44,7 +44,7 @@ uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint
                 checksum += *ptr;
             checksum = ~checksum;
             if (checksum == *ptrPacketEnd_) {
-                std::memcpy(outputPackets[numberOfPackets],ptrPacketBegin_,sizeof(uint8_t)*(4+(*(ptrPacketBegin_+3))));
+                std::memcpy(outputPackets[numberOfPackets],ptrPacketBegin_,sizeof(uint8_t)*(ptrPacketEnd_-ptrPacketBegin_+1));
                 ++numberOfPackets;
                 if (maxNumberOfPackets <= numberOfPackets) return numberOfPackets;
             }

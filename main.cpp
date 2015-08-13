@@ -210,8 +210,8 @@ void test_MX28() {
 
 int main() {
 
-    //test_base_Dynamixel_v1();
-    test_MX28();
+    test_base_Dynamixel_v1();
+    //test_MX28();
 
 
 
