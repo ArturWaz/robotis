@@ -1,6 +1,6 @@
 
 
-#include "robotis/asynchronousPacketReader.h"
+#include "packetSplitter_robotisV1.h"
 #include "robotis/MX12W.h"
 
 
@@ -80,7 +80,7 @@ void test_base_Dynamixel_v1() {
     std::uint8_t buf13[1] = {0xAA};
     std::uint8_t buf14[1] = {0xDC};
 
-    asynchronousPacketReader d;
+    packetSplitter_robotisV1 d;
 
     array<uint8_t,ROBOTIS_BUFFER_LENGTH> packets[20];
     //for (int i = 0; i < 250; ++i)
