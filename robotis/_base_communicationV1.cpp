@@ -10,8 +10,7 @@
 
 
 
-void _base_communicationV1::pingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
-    if (maxPacketLength < 6) throw std::range_error(" [ MX_28::sendPresentPosition(uint8_t *, uint32_t, uint8_t ID) ]: Packet length is too short.\n");
+void _base_communicationV1::pingEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     packet[0] = 0xFF;
     packet[1] = 0xFF;
     packet[2] = ID;
@@ -21,37 +20,35 @@ void _base_communicationV1::pingEnquire(uint8_t *packet, uint32_t maxPacketLengt
 }
 
 
-uint8_t _base_communicationV1::statusResponse(uint8_t const *packet, uint8_t &ID) {
+uint8_t _base_communicationV1::statusResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID) noexcept {
     ID = packet[2];
     return packet[4];
 }
 
 
-uint8_t _base_communicationV1::calculateChecksum(uint8_t const *packet) {
+uint8_t _base_communicationV1::calculateChecksum(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept {
     uint8_t checksum = 0;
-    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
+    for (uint8_t const *ptr = packet.data()+2; ptr != packet.data()+3+(*(packet.data()+3)); ++ptr) checksum += *ptr;
     return ~checksum;
 }
 
 
-bool _base_communicationV1::validateChecksum(uint8_t const *packet, uint32_t maxPacketLength) {
-    if (maxPacketLength < *(packet+3)) return false;
+bool _base_communicationV1::validateChecksum(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept {
     uint8_t checksum = 0;
-    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
-    return *(packet+3+(*(packet+3))) == uint8_t(~checksum);
+    for (uint8_t const *ptr = packet.data()+2; ptr != packet.data()+3+(*(packet.data()+3)); ++ptr) checksum += *ptr;
+    return *(packet.data()+3+(*(packet.data()+3))) == uint8_t(~checksum);
 }
 
 
-bool _base_communicationV1::validatePacket(uint8_t const *packet, uint32_t maxPacketLength) {
-    if (maxPacketLength < *(packet+3)) return false;
-    if (*packet != 0xFF && *(packet+1) != 0xFF) return false;
+bool _base_communicationV1::validatePacket(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept {
+    if (*packet.data() != 0xFF && *(packet.data()+1) != 0xFF) return false;
     uint8_t checksum = 0;
-    for (uint8_t const *ptr = packet+2; ptr != packet+3+(*(packet+3)); ++ptr) checksum += *ptr;
-    return *(packet+3+(*(packet+3))) == uint8_t(~checksum);
+    for (uint8_t const *ptr = packet.data()+2; ptr != packet.data()+3+(*(packet.data()+3)); ++ptr) checksum += *ptr;
+    return *(packet.data()+3+(*(packet.data()+3))) == uint8_t(~checksum);
 }
 
 
-std::string _base_communicationV1::errorsToString(uint8_t error) {
+std::string _base_communicationV1::errorsToString(uint8_t error) noexcept {
     std::string errorS("Error status: ");
     if (!error) return errorS + std::string("No errors.\n");
     if (error & (1<<int(Error::ANGLE_LIMIT_ERROR)))     errorS += std::string("\n    * Goal Position is written out of the range from CW Angle Limit to CCW Angle Limit.\n");

@@ -6,8 +6,12 @@
 #define DYNAMIXEL__BASE_DYNAMIXELCOMMUNICATIONV1_H
 
 
+#define ROBOTIS_BUFFER_LENGTH 256 // default: 256, rather do not modify
+
+
 #include <stdint.h>
 #include <string>
+#include <array>
 
 
 namespace _base_communicationV1 {
@@ -22,17 +26,17 @@ namespace _base_communicationV1 {
         INSTRUCTION_ERROR = 6
     };
 
-    void pingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t statusResponse(uint8_t const *packet, uint8_t &ID);
-    inline uint32_t statusResponseLength() { return 0x06; }
+    void pingEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t statusResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID) noexcept;
+    inline uint32_t statusResponseLength() noexcept { return 0x06; }
 
 
-    uint8_t calculateChecksum(uint8_t const *packet);
-    bool validateChecksum(uint8_t const *packet, uint32_t maxPacketLength);
+    uint8_t calculateChecksum(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept;
+    bool validateChecksum(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept;
 
-    bool validatePacket(uint8_t const *packet, uint32_t maxPacketLength);
+    bool validatePacket(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet) noexcept;
 
-    std::string errorsToString(uint8_t error);
+    std::string errorsToString(uint8_t error) noexcept;
 
 }
 

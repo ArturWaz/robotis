@@ -4,7 +4,6 @@
 
 #include "MX28.h"
 
-#include <stdexcept>
 
 
 
@@ -16,7 +15,6 @@
  */
 
 #define GENERATE_SENDING_PACKET_FOR_READ(ADDRESS,LENGTH) \
-    if (maxPacketLength < 10) throw std::range_error(" [ MX_28::...(uint8_t *, uint32_t, uint8_t ID) ]: Packet length is too short.\n"); \
     packet[0] = 0xFF; \
     packet[1] = 0xFF; \
     packet[2] = ID; \
@@ -44,9 +42,9 @@
 
 
 
-void MX28::getPIDEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPIDEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x1A,0x03) }
-uint8_t MX28::getPIDResponse(uint8_t const *packet, uint8_t &ID, uint8_t &P, uint8_t &I, uint8_t &D) {
+uint8_t MX28::getPIDResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &P, uint8_t &I, uint8_t &D) noexcept {
     ID = packet[2];
     D = packet[5];
     I = packet[6];
@@ -57,72 +55,72 @@ uint8_t MX28::getPIDResponse(uint8_t const *packet, uint8_t &ID, uint8_t &P, uin
 
 
 
-void MX28::getPresentPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPresentPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x24,0x02) }
-uint8_t MX28::getPresentPositionResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getPresentPositionResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
-void MX28::getPresentSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPresentSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x26,0x02) }
-uint8_t MX28::getPresentSpeedResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getPresentSpeedResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
-void MX28::getPresentLoadEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPresentLoadEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x28,0x02) }
-uint8_t MX28::getPresentLoadResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getPresentLoadResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
-void MX28::getPunchEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPunchEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x30,0x02) }
-uint8_t MX28::getPunchResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getPunchResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
-void MX28::getGoalPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getGoalPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x1E,0x02) }
-uint8_t MX28::getGoalPositionResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getGoalPositionResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
-void MX28::getMovingSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getMovingSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x20,0x02) }
-uint8_t MX28::getMovingSpeedResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value) {
+uint8_t MX28::getMovingSpeedResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept {
     GENERATE_PACKET_READER_2B() }
 
 
 
 
 
-void MX28::getPresentVoltageEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPresentVoltageEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x2A,0x01) }
-uint8_t MX28::getPresentVoltageResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value) {
+uint8_t MX28::getPresentVoltageResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept {
     GENERATE_PACKET_READER_1B() }
 
 
-void MX28::getPresentTemperatureEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getPresentTemperatureEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x2B,0x01) }
-uint8_t MX28::getPresentTemperatureResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value) {
+uint8_t MX28::getPresentTemperatureResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept {
     GENERATE_PACKET_READER_1B() }
 
 
-void MX28::getMovingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getMovingEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x2E,0x01) }
-uint8_t MX28::getMovingResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value) {
+uint8_t MX28::getMovingResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept {
     GENERATE_PACKET_READER_1B() }
 
 
-void MX28::getGoalAccelerationEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getGoalAccelerationEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x49,0x01) }
-uint8_t MX28::getGoalAccelerationResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value) {
+uint8_t MX28::getGoalAccelerationResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept {
     GENERATE_PACKET_READER_1B() }
 
 
-void MX28::getTorqueEnableEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID) {
+void MX28::getTorqueEnableEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept {
     GENERATE_SENDING_PACKET_FOR_READ(0x18,0x01) }
-uint8_t MX28::getTorqueEnableResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value) {
+uint8_t MX28::getTorqueEnableResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept {
     GENERATE_PACKET_READER_1B() }
 
 
@@ -136,7 +134,6 @@ uint8_t MX28::getTorqueEnableResponse(uint8_t const *packet, uint8_t &ID, uint8_
 
 
 #define GENERATE_SENDING_PACKET_FOR_WRITE_1B(ADDRESS) \
-    if (maxPacketLength < 10) throw std::range_error(" [ MX_28::...(uint8_t *, uint32_t, uint8_t, uint8_t) ]: Packet length is too short.\n"); \
     packet[0] = 0xFF; \
     packet[1] = 0xFF; \
     packet[2] = ID; \
@@ -148,7 +145,6 @@ uint8_t MX28::getTorqueEnableResponse(uint8_t const *packet, uint8_t &ID, uint8_
 
 
 #define GENERATE_SENDING_PACKET_FOR_WRITE_2B(ADDRESS) \
-if (maxPacketLength < 10) throw std::range_error(" [ MX_28::...(uint8_t *, uint32_t, uint8_t, uint16_t) ]: Packet length is too short.\n"); \
     packet[0] = 0xFF; \
     packet[1] = 0xFF; \
     packet[2] = ID; \
@@ -157,15 +153,14 @@ if (maxPacketLength < 10) throw std::range_error(" [ MX_28::...(uint8_t *, uint3
     packet[5] = ADDRESS; \
     packet[6] = value; \
     packet[7] = (value>>8); \
-    packet[8] = ~(ID+(*(packet+6))+(*(packet+7))+uint8_t(0x07+ADDRESS)); // checksum
+    packet[8] = ~(ID+(*(packet.data()+6))+(*(packet.data()+7))+(0x07+ADDRESS)); // checksum
 
 
 
 
 
 
-void MX28::setPIDEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t P, uint8_t I, uint8_t D) {
-    if (maxPacketLength < 10) throw std::range_error(" [ MX_28::...(uint8_t *, uint32_t, uint8_t ID) ]: Packet length is too short.\n");
+void MX28::setPIDEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t P, uint8_t I, uint8_t D) noexcept {
     packet[0] = 0xFF;
     packet[1] = 0xFF;
     packet[2] = ID;
@@ -180,22 +175,22 @@ void MX28::setPIDEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, 
 
 
 
-void MX28::setGoalPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value) {
+void MX28::setGoalPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_2B(0x1E) }
 
-void MX28::setMovingSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value) {
+void MX28::setMovingSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_2B(0x20) }
 
-void MX28::setPunchEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value) {
+void MX28::setPunchEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_2B(0x30) }
 
-void MX28::setTorqueLimitEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value) {
+void MX28::setTorqueLimitEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_2B(0x22) }
 
 
 
-void MX28::setTorqueEnableEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t value) {
+void MX28::setTorqueEnableEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_1B(0x18) }
 
-void MX28::setGoalAccelerationEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t value) {
+void MX28::setGoalAccelerationEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t value) noexcept {
     GENERATE_SENDING_PACKET_FOR_WRITE_1B(0x49) }

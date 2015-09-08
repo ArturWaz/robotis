@@ -17,75 +17,75 @@ namespace MX28 {
     using namespace _base_communicationV1;
 
     // READING FROM SERVO
-    void getPIDEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPIDResponse(uint8_t const *packet, uint8_t &ID, uint8_t &P, uint8_t &I, uint8_t &D);
-    inline uint32_t getPIDResponseLength() { return 0x09; }
+    void getPIDEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPIDResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &P, uint8_t &I, uint8_t &D) noexcept;
+    inline uint32_t getPIDResponseLength() noexcept { return 0x09; }
 
 
-    void getPresentPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPresentPositionResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getPresentPositionResponseLength() { return 0x08; }
+    void getPresentPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPresentPositionResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getPresentPositionResponseLength() noexcept { return 0x08; }
 
-    void getPresentSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPresentSpeedResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getPresentSpeedResponseLength() { return 0x08; }
+    void getPresentSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPresentSpeedResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getPresentSpeedResponseLength() noexcept { return 0x08; }
 
-    void getPresentLoadEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPresentLoadResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getPresentLoadResponseLength() { return 0x08; }
+    void getPresentLoadEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPresentLoadResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getPresentLoadResponseLength() noexcept { return 0x08; }
 
-    void getPunchEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPunchResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getPunchResponseLength() { return 0x08; }
+    void getPunchEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPunchResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getPunchResponseLength() noexcept { return 0x08; }
 
-    void getGoalPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getGoalPositionResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getGoalPositionResponseLength() { return 0x08; }
+    void getGoalPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getGoalPositionResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getGoalPositionResponseLength() noexcept { return 0x08; }
 
-    void getMovingSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getMovingSpeedResponse(uint8_t const *packet, uint8_t &ID, uint16_t &value);
-    inline uint32_t getMovingSpeedResponseLength() { return 0x08; }
+    void getMovingSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getMovingSpeedResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint16_t &value) noexcept;
+    inline uint32_t getMovingSpeedResponseLength() noexcept { return 0x08; }
 
 
-    void getPresentVoltageEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPresentVoltageResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value);
-    inline uint32_t getPresentVoltageResponseLength() { return 0x07; }
+    void getPresentVoltageEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPresentVoltageResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept;
+    inline uint32_t getPresentVoltageResponseLength() noexcept { return 0x07; }
 
-    void getPresentTemperatureEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getPresentTemperatureResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value);
-    inline uint32_t getPresentTemperatureResponseLength() { return 0x07; }
+    void getPresentTemperatureEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getPresentTemperatureResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept;
+    inline uint32_t getPresentTemperatureResponseLength() noexcept { return 0x07; }
 
-    void getMovingEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getMovingResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value);
-    inline uint32_t getMovingResponseLength() { return 0x07; }
+    void getMovingEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getMovingResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept;
+    inline uint32_t getMovingResponseLength() noexcept { return 0x07; }
 
-    void getGoalAccelerationEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getGoalAccelerationResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value);
-    inline uint32_t getGoalAccelerationResponseLength() { return 0x07; }
+    void getGoalAccelerationEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getGoalAccelerationResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept;
+    inline uint32_t getGoalAccelerationResponseLength() noexcept { return 0x07; }
 
-    void getTorqueEnableEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID);
-    uint8_t getTorqueEnableResponse(uint8_t const *packet, uint8_t &ID, uint8_t &value);
-    inline uint32_t getTorqueEnableResponseLength() { return 0x07; }
+    void getTorqueEnableEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID) noexcept;
+    uint8_t getTorqueEnableResponse(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> const &packet, uint8_t &ID, uint8_t &value) noexcept;
+    inline uint32_t getTorqueEnableResponseLength() noexcept { return 0x07; }
 
 
 
 
     // WRITING TO SERVO
-    void setPIDEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t P,uint8_t I, uint8_t D);
+    void setPIDEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t P,uint8_t I, uint8_t D) noexcept;
 
 
-    void setGoalPositionEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value);
+    void setGoalPositionEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept;
 
-    void setMovingSpeedEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value);
+    void setMovingSpeedEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept;
 
-    void setPunchEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value);
+    void setPunchEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept;
 
-    void setTorqueLimitEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint16_t value);
+    void setTorqueLimitEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint16_t value) noexcept;
 
 
-    void setTorqueEnableEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t value);
+    void setTorqueEnableEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t value) noexcept;
 
-    void setGoalAccelerationEnquire(uint8_t *packet, uint32_t maxPacketLength, uint8_t ID, uint8_t value);
+    void setGoalAccelerationEnquire(std::array<uint8_t, ROBOTIS_BUFFER_LENGTH> &packet, uint8_t ID, uint8_t value) noexcept;
 
 
 }

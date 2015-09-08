@@ -11,7 +11,7 @@
 
 
 
-asynchronousPacketReader::asynchronousPacketReader():
+asynchronousPacketReader::asynchronousPacketReader() noexcept :
         packetBegin_(&(packet_[5])),
         packetEnd_(&(packet_[254])),
         ptrPacketCur_(packetBegin_),
@@ -19,8 +19,8 @@ asynchronousPacketReader::asynchronousPacketReader():
         ptrPacketEnd_(nullptr) {}
 
 
-uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, uint8_t **outputPackets, uint32_t maxNumberOfPackets, uint32_t maxNumberOfBytes) {
-    if (maxNumberOfPackets < 1 || maxNumberOfBytes < 5) return 0;
+uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, std::array<uint8_t,ROBOTIS_BUFFER_LENGTH> *outputPackets, uint32_t maxNumberOfPackets) noexcept {
+    if (maxNumberOfPackets < 1) return 0;
     uint32_t numberOfPackets = 0;
 
     for (uint8_t const *ptrBuff = &(inputBuffer[0]); ptrBuff != &(inputBuffer[inputLength]); ++ptrBuff) {
@@ -30,8 +30,6 @@ uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint
             uint8_t *ptrTmp = ptrPacketCur_-1;
             if (*(--ptrTmp) == 0xFF) {
                 if (*(--ptrTmp) == 0xFF) {
-                    if (maxNumberOfBytes < (*ptrPacketCur_) + 5u)
-                        throw std::range_error(" [ asynchronousPacketReader::splitPackets(...) ]: Maximum number of bytes is too small.\n");
                     ptrPacketBegin_ = ptrTmp;
                     ptrPacketEnd_ = ptrPacketCur_ + (*ptrPacketCur_);
                 }
@@ -44,7 +42,7 @@ uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint
                 checksum += *ptr;
             checksum = ~checksum;
             if (checksum == *ptrPacketEnd_) {
-                std::memcpy(outputPackets[numberOfPackets],ptrPacketBegin_,sizeof(uint8_t)*(ptrPacketEnd_-ptrPacketBegin_+1));
+                std::memcpy(outputPackets[numberOfPackets].data(),ptrPacketBegin_,sizeof(uint8_t)*(ptrPacketEnd_-ptrPacketBegin_+1));
                 ++numberOfPackets;
                 if (maxNumberOfPackets <= numberOfPackets) return numberOfPackets;
             }
@@ -64,7 +62,7 @@ uint32_t asynchronousPacketReader::splitPackets(uint8_t const *inputBuffer, uint
 }
 
 
-void asynchronousPacketReader::resetSpliting() {
+void asynchronousPacketReader::resetSpliting() noexcept {
     ptrPacketEnd_ = nullptr;
     ptrPacketCur_ = packetBegin_;
 }

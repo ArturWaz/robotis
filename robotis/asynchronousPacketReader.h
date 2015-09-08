@@ -8,16 +8,17 @@
 
 #include <stdint.h>
 
+#include "_base_communicationV1.h"
 
 
 
 class asynchronousPacketReader {
 public:
 
-    asynchronousPacketReader();
+    asynchronousPacketReader() noexcept;
 
-    uint32_t splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, uint8_t **outputPackets, uint32_t maxNumberOfPackets, uint32_t maxNumberOfBytes);
-    void resetSpliting(); // could be useful in timeouts
+    uint32_t splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, std::array<uint8_t,ROBOTIS_BUFFER_LENGTH> *outputPackets, uint32_t maxNumberOfPackets) noexcept;
+    void resetSpliting() noexcept; // could be useful in timeouts
 
 private:
 
