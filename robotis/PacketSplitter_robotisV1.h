@@ -12,10 +12,10 @@
 
 
 
-class packetSplitter_robotisV1 {
+class PacketSplitter_robotisV1 {
 public:
 
-    packetSplitter_robotisV1() noexcept;
+    PacketSplitter_robotisV1() noexcept;
 
     uint32_t splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, std::array<uint8_t,ROBOTIS_BUFFER_LENGTH> *outputPackets, uint32_t maxNumberOfPackets) noexcept;
     void resetSpliting() noexcept; // could be useful in timeouts

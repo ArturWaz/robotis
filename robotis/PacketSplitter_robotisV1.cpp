@@ -3,7 +3,7 @@
 //
 
 
-#include "packetSplitter_robotisV1.h"
+#include "PacketSplitter_robotisV1.h"
 
 #include <cstring>
 #include <stdexcept>
@@ -11,7 +11,7 @@
 
 
 
-packetSplitter_robotisV1::packetSplitter_robotisV1() noexcept :
+PacketSplitter_robotisV1::PacketSplitter_robotisV1() noexcept :
         packetBegin_(&(packet_[5])),
         packetEnd_(&(packet_[254])),
         ptrPacketCur_(packetBegin_),
@@ -19,7 +19,7 @@ packetSplitter_robotisV1::packetSplitter_robotisV1() noexcept :
         ptrPacketEnd_(nullptr) {}
 
 
-uint32_t packetSplitter_robotisV1::splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, std::array<uint8_t,ROBOTIS_BUFFER_LENGTH> *outputPackets, uint32_t maxNumberOfPackets) noexcept {
+uint32_t PacketSplitter_robotisV1::splitPackets(uint8_t const *inputBuffer, uint32_t inputLength, std::array<uint8_t,ROBOTIS_BUFFER_LENGTH> *outputPackets, uint32_t maxNumberOfPackets) noexcept {
     if (maxNumberOfPackets < 1) return 0;
     uint32_t numberOfPackets = 0;
 
@@ -46,7 +46,7 @@ uint32_t packetSplitter_robotisV1::splitPackets(uint8_t const *inputBuffer, uint
                 ++numberOfPackets;
                 if (maxNumberOfPackets <= numberOfPackets) return numberOfPackets;
             }
-            else std::cerr << "\tWARNING: [ packetSplitter_robotisV1::splitPackets(...) ]: Different checksums.\n";
+            else std::cerr << "\tWARNING: [ PacketSplitter_robotisV1::splitPackets(...) ]: Different checksums.\n";
             ptrPacketEnd_ = nullptr;
             ptrPacketCur_ = packetBegin_;
         }
@@ -54,7 +54,7 @@ uint32_t packetSplitter_robotisV1::splitPackets(uint8_t const *inputBuffer, uint
         ++ptrPacketCur_;
         if (ptrPacketCur_ == packetEnd_) {
             ptrPacketCur_ = packetBegin_;
-            std::cerr << "\tWARNING: [ packetSplitter_robotisV1::splitPackets(...) ]: Many packets lost.\n";
+            std::cerr << "\tWARNING: [ PacketSplitter_robotisV1::splitPackets(...) ]: Many packets lost.\n";
         }
     }
 
@@ -62,7 +62,7 @@ uint32_t packetSplitter_robotisV1::splitPackets(uint8_t const *inputBuffer, uint
 }
 
 
-void packetSplitter_robotisV1::resetSpliting() noexcept {
+void PacketSplitter_robotisV1::resetSpliting() noexcept {
     ptrPacketEnd_ = nullptr;
     ptrPacketCur_ = packetBegin_;
 }

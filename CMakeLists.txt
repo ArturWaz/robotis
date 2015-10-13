@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.10)
 
 
-set(PROJECT_NAME dynamixel)
+set(PROJECT_NAME dynamixel_unitTest)
 project(${PROJECT_NAME})
 
 
@@ -18,5 +18,5 @@ endif ( UNIX )
 add_subdirectory(robotis)
 
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries (${PROJECT_NAME} robotis)
+add_executable(${PROJECT_NAME} unitTests/UnitTest_robotisV1.cpp)
+target_link_libraries(${PROJECT_NAME} robotis boost_unit_test_framework)
